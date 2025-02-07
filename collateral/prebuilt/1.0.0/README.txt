@@ -1,0 +1,1 @@
+This LDR has been compiled with optimizations enabled. 

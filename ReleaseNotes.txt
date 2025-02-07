@@ -1,0 +1,34 @@
+Hardware                     Software                                     Version
+---------------              ---------------------------------            -------
+EV-SC598-SOM Rev C and D  +  EV-SC598-EZKIT Audio Starter with Networking 1.0.0
+EV-SOMCRR-EZKIT Rev A and D 
+
+Below is a list of the major changes from the baseline.
+Note that minor/refactor changes will not be listed. 
+
+First revision. See feature set here: https://wiki.analog.com/resources/tools-software/sharc-audio-module/advanced-audio-projects/appendix-a
+
+New Features
+------------
+
+
+Bug Fixes
+---------
+
+
+Known Issues
+-------------
+FAESWPROJ-263 - Slow USB Enumeration on EV-SOMCRR-EZKIT Rev A. Hardware
+FAESWPROJ-236 - No response from shell after disconnect/reconnect when VU is active
+FAESWPROJ-248 - VU Meters don't display in TeraTerm v5.0 or greater
+FAESWPROJ-171 - EV-SC598-SOM Rev E. hardware not supported
+
+Compatibility Issues
+--------------------
+None
+
+
+
+
+
+

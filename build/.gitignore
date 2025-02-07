@@ -1,0 +1,11 @@
+ALL
+ARM
+SHARC0
+SHARC1
+EV-SC598-EZKIT*.*xe
+EV-SC598-EZKIT*.ldr
+EV-SC598-EZKIT*.map
+.cflags*
+.lobjs*
+linker_log*
+*.log

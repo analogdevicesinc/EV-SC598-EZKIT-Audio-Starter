@@ -2225,7 +2225,6 @@ int somcrr_hw_version(APP_CONTEXT *context)
     int version = SOMCRR_REV_A;
     uint8_t rx[4];
     uint8_t tx[4] = { 0x9F, 0x00, 0x00, 0x00};
-    bool value;
 
     /*
      * The carrier board rev can be detected by the polarity of the
@@ -2241,6 +2240,9 @@ int somcrr_hw_version(APP_CONTEXT *context)
      * Default to Rev A
      */
 
+    /* Initialize HW Check */
+    ss_init(context);
+
     /* Configure SPI2 */
     spiResult = spi_open(SPI2, &spi);
     spiResult = spi_openDevice(spi, &spiFlash);
@@ -2250,12 +2252,8 @@ int somcrr_hw_version(APP_CONTEXT *context)
     spiResult = spi_setLsbFirst(spiFlash, false);
     spiResult = spi_setSlaveSelect(spiFlash, SPI_SSEL_1);
 
-
     /* Disable SoM QSPI Flash */
     ss_set(context, SS_PIN_ID_nSPI2FLASH_CS_EN, 1);
-
-    /* Save SOMCRR OSPI enable value */
-    ss_get(context, SS_PIN_ID_OCTAL_SPI_CS_EN, &value);
 
     /* Set carrier board OCTAL_SPI_CS_EN low and probe (Rev D) */
     ss_set(context, SS_PIN_ID_OCTAL_SPI_CS_EN, 0);
@@ -2264,21 +2262,38 @@ int somcrr_hw_version(APP_CONTEXT *context)
         version = SOMCRR_REV_D;
     }
 
-    /* Restore SOMCRR OSPI enable value */
-    ss_set(context, SS_PIN_ID_OCTAL_SPI_CS_EN, value);
-
     /* Close SPI2 */
     spiResult = spi_closeDevice(&spiFlash);
     spiResult = spi_close(&spi);
 
-    /* Enable SoM QSPI Flash */
-    ss_set(context, SS_PIN_ID_nSPI2FLASH_CS_EN, 0);
+    /* Deinit the HW Check */
+    ss_deinit(context);
 
-    /* Set new SS default values for Rev D where polarity changed */
-    if (version == SOMCRR_REV_D) {
-        ss_set(context, SS_PIN_ID_EEPROM_EN, 0);
-        ss_set(context, SS_PIN_ID_PUSHBUTTON_EN, 0);
-        ss_set(context, SS_PIN_ID_OCTAL_SPI_CS_EN, 1);
+    return(version);
+}
+
+/**********************************************************************
+ * SoM HW probe
+ **********************************************************************/
+int som_hw_version(APP_CONTEXT *context)
+{
+    int version = SOM_REV_D;
+    uint8_t rx[1];
+    uint8_t tx[1] = { 0x01 };
+
+    /*
+     * The SOM board rev can be detected by the soft-switch 
+     * attached to the TWI2 port. Each soft-switch between 
+     * the SOMs has a different TWI address (0x34U for rev E and 0x20U for 
+     * rev D and lower) so we can read a known register value from each 
+     * to determine the variant. 
+     * 
+     * Default to Rev D
+     */
+
+    if(twi_writeRead(context->softSwitchHandle, 0x34U, tx, sizeof(tx), rx, sizeof(rx)) == TWI_SIMPLE_SUCCESS)
+    {
+        version = SOM_REV_E;
     }
 
     return(version);

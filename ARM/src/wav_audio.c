@@ -59,8 +59,7 @@ portTASK_FUNCTION(wavSrcTask, pvParameters)
             maxReads = 2 * (samplesOut / samplesIn);
             ok = true;
             while (ok && (samplesOut >= samplesIn) && maxReads) {
-                rsize = readWave(wavSrc, srcBuffer, samplesIn);
-                ok = (rsize >= 0);
+                ok = readWave(wavSrc, srcBuffer, samplesIn, &rsize);
                 if (ok) {
                     if (wavSrc->wordSizeBytes == sizeof(SYSTEM_AUDIO_TYPE)) {
                         PaUtil_WriteRingBuffer(wavSrcRB, srcBuffer, rsize);
@@ -117,14 +116,14 @@ portTASK_FUNCTION(wavSinkTask, pvParameters)
                     wavSinkRB, sinkBuffer2, samplesOut
                 );
                 if (wavSink->wordSizeBytes == sizeof(SYSTEM_AUDIO_TYPE)) {
-                    wsize = writeWave(wavSink, sinkBuffer2, samplesOut);
+                    (void) writeWave(wavSink, sinkBuffer2, samplesOut, &wsize);
                 } else {
                     copyAndConvert(
                         sinkBuffer2, sizeof(SYSTEM_AUDIO_TYPE), wavSink->channels,
                         sinkBuffer3, wavSink->wordSizeBytes, wavSink->channels,
                         samplesOut / wavSink->channels, true
                     );
-                    wsize = writeWave(wavSink, sinkBuffer3, samplesOut);
+                    (void) writeWave(wavSink, sinkBuffer3, samplesOut, &wsize);
                 }
                 samplesIn = PaUtil_GetRingBufferReadAvailable(wavSinkRB);
                 if ((--maxWrites == 0) && (samplesIn > WAV_RING_BUF_SAMPLES / 2)) {

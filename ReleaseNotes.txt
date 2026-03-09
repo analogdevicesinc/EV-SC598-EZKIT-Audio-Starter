@@ -1,6 +1,6 @@
 Hardware                     Software                                     Version
 ---------------              ---------------------------------            -------
-EV-SC598-SOM Rev C and D  +  EV-SC598-EZKIT Audio Starter with Networking 1.0.0
+EV-SC598-SOM Rev C, D, and E  +  EV-SC598-EZKIT Audio Starter with Networking 2.0.0
 EV-SOMCRR-EZKIT Rev A and D 
 
 Below is a list of the major changes from the baseline.
@@ -10,18 +10,30 @@ First revision. See feature set here: https://wiki.analog.com/resources/tools-so
 
 New Features
 ------------
+FAESWPROJ-366 - Refactor getline
+FAESWPROJ-258 - WAV File Sink On: Auto Increment Filename
+FAESWPROJ-282 - WAV Command: Add ability to play 'n' times vs. looping
+FAESWPROJ-330 - VU Meters: Configurable display
+FAESWPROJ-259 - Shell command to loop run command
+FAESWPROJ-315 - SAM: Integration of OSS component kimgr/getopt_port
+FAESWPROJ-171 - Support SC598 Rev E - Audio Starter
+No ticket     - Add y axis to VU meters
+No ticket     - Synchronize various reusable components
 
 
 Bug Fixes
 ---------
-
+FAESWPROJ-248 - VU Meters don't display in TeraTerm v5 or greater
+FAESWPROJ-293 - SAM: WAV Recording Cut Off
+FAESWPROJ-292 - Full LDR doesn't boot into application on blank flash
+FAESWPROJ-165 - USB Pop noise with no route
 
 Known Issues
 -------------
+FAESWPROJ-268 - Uart-cdc intermittent lockup
 FAESWPROJ-263 - Slow USB Enumeration on EV-SOMCRR-EZKIT Rev A. Hardware
+FAESWPROJ-254 - A2B Network Discovery Failures using XML files exported from SS+
 FAESWPROJ-236 - No response from shell after disconnect/reconnect when VU is active
-FAESWPROJ-248 - VU Meters don't display in TeraTerm v5.0 or greater
-FAESWPROJ-171 - EV-SC598-SOM Rev E. hardware not supported
 
 Compatibility Issues
 --------------------

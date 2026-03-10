@@ -34,6 +34,7 @@ FAESWPROJ-268 - Uart-cdc intermittent lockup
 FAESWPROJ-263 - Slow USB Enumeration on EV-SOMCRR-EZKIT Rev A. Hardware
 FAESWPROJ-254 - A2B Network Discovery Failures using XML files exported from SS+
 FAESWPROJ-236 - No response from shell after disconnect/reconnect when VU is active
+FAESWPROJ-313 - SC598 Rev E. SOM Flashing Issues (see Wiki for workaround)
 
 Compatibility Issues
 --------------------

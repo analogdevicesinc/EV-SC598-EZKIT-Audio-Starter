@@ -51,6 +51,7 @@ ARM_SRC_DIRS += \
 	ALL/src \
 	ALL/src/sae \
 	ARM \
+	ARM/include \
 	ARM/src \
 	ARM/src/simple-drivers \
 	ARM/src/simple-services/adau1962 \
@@ -61,14 +62,18 @@ ARM_SRC_DIRS += \
 	ARM/src/simple-services/adi-a2b-cmdlist \
 	ARM/src/simple-services/FreeRTOS-cpu-load \
 	ARM/src/simple-services/a2b-to-sport-cfg \
- 	ARM/src/adi-drivers/emsi \
+	ARM/src/adi-drivers/emsi \
 	ARM/src/simple-services/adi-osal-minimal \
 	ARM/src/simple-services/uac2-cdc-soundcard \
 	ARM/src/simple-services/fs-dev \
+	ARM/src/simple-services/getline \
 	ARM/src/simple-services/rtp-stream \
 	ARM/src/simple-services/vban-stream \
 	ARM/src/simple-services/wav-file \
 	ARM/src/simple-services/telnet \
+	ARM/src/simple-services/mcp2301x \
+	ARM/src/simple-services/adp5587 \
+	ARM/src/simple-services/soft-switch \
 	ARM/src/oss-services/lwip/core \
 	ARM/src/oss-services/lwip/core/ipv4 \
 	ARM/src/oss-services/lwip/netif \
@@ -84,7 +89,7 @@ ARM_SRC_DIRS += \
 	ARM/src/oss-services/spiffs \
 	ARM/src/oss-services/libtelnet \
 	ARM/src/oss-services/kilo \
-	ARM/src/oss-services/getline \
+	ARM/src/oss-services/getopt \
 	ARM/src/oss-services/printf \
 	ARM/src/oss-services/c-timestamp \
 	ARM/src/oss-services/FatFs \

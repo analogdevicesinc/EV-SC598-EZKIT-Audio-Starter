@@ -562,14 +562,15 @@ static portTASK_FUNCTION( startupTask, pvParameters )
     context->a2bTwiHandle = context->twi2Handle;
     context->si5356Handle = context->twi2Handle;
 
+    /*
+     * Get the HW Versions, used for setting up HW specific functionality
+     * on the variants of the carrier and SOMs of the same type.
+     */
+    context->SoMVersion = som_hw_version(context);
+    context->SoMCRRVersion = somcrr_hw_version(context);
+
     /* Initialize the soft switches */
     ss_init(context);
-
-    /*
-     * Get the SOMCRR Version.  This function also sets compatible default
-     * soft switch values for Rev D SOMCRR boards.
-     */
-    context->SoMCRRVersion = somcrr_hw_version(context);
 
     /* Init the SHARC Audio Engine.  This core is configured to be the
      * IPC master so this function must run to completion before any

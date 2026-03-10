@@ -1174,6 +1174,14 @@ SPI_SIMPLE_RESULT spi_batch_xfer(sSPIPeriph *deviceHandle, uint16_t numXfers, sS
     if (numXfers == 0) {
         return(SPI_SIMPLE_ERROR);
     }
+    
+    /* Confirm rx/tx length requirement */
+    for (uint16_t i = 0; i < numXfers; i++) {
+        sSPIXfer *xfer = xfers + i;
+        if (xfer->len == 0) {
+            return(SPI_SIMPLE_ERROR);
+        }
+    }
 
     /* Confirm rx/tx buffer cache alignment */
     for (uint16_t i = 0; i < numXfers; i++) {

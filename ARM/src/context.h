@@ -48,6 +48,10 @@
 #define SOMCRR_REV_A   100
 #define SOMCRR_REV_D   400
 
+/* SoM Versions */
+#define SOM_REV_D      100
+#define SOM_REV_E      400
+
 /*
  * WARNING: Do not change SYSTEM_AUDIO_TYPE from int32_t
  *
@@ -237,6 +241,7 @@ typedef struct _APP_CONTEXT {
 
     /* SoM Carrier Version */
     int SoMCRRVersion;
+    int SoMVersion;
 
     /* Core clock frequency */
     uint32_t cclk;

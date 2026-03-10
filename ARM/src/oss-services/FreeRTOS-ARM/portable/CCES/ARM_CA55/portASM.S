@@ -34,6 +34,7 @@
 	.extern vApplicationIRQHandler
 	.extern ullPortInterruptNesting
 	.extern ullPortTaskHasFPUContext
+	.extern ullPortIRQHasFPUContext
 	.extern ullCriticalNesting
 	.extern ullPortYieldRequired
 
@@ -265,6 +266,16 @@ FreeRTOS_IRQ_Handler:
 	STP		X18, X19, [SP, #-0x10]!
 	STP		X29, X30, [SP, #-0x10]!
 
+	/* 
+     * Save the FPU context, if any - one global setting for all IRQs 
+     * so no need to save the ullPortIRQHasFPUContext across context
+     * as this value is a const.
+     */
+	LDR		X2, ullPortIRQHasFPUContextConst
+	LDR		X3, [X2]  
+	CMP		X3, #0
+	B.EQ	1f
+
 	/* Save the FPU context (32 128-bit registers). */
 	STP		Q0, Q1, [SP,#-0x20]!
 	STP		Q2, Q3, [SP,#-0x20]!
@@ -288,6 +299,7 @@ FreeRTOS_IRQ_Handler:
     MRS     X3, FPSR
     STP		X2, X3, [SP, #-0x10]!
 
+1:
 	/* Save the SPSR and ELR. */
 	MRS		X3, SPSR_EL3
 	MRS		X2, ELR_EL3
@@ -378,6 +390,16 @@ FreeRTOS_IRQ_Handler:
 	DSB		SY
 	ISB		SY
 
+	/* 
+     * Restore the FPU context, if any - one global setting for all IRQs 
+     * so no need to save the ullPortIRQHasFPUContext across context
+     * as this value is a const.
+     */
+	LDR		X4, ullPortIRQHasFPUContextConst
+	LDR		X5, [X4]  
+	CMP		X5, #0
+	B.EQ	1f
+
     /* Restore FPSR */
     LDP		X4, X5, [SP], #0x10
     MSR     FPSR, X5
@@ -399,7 +421,8 @@ FreeRTOS_IRQ_Handler:
 	LDP		Q4, Q5, [SP], #0x20
 	LDP		Q2, Q3, [SP], #0x20
 	LDP		Q0, Q1, [SP], #0x20  
-    
+
+1:    
     /* Restore the base context */
 	LDP		X29, X30, [SP], #0x10
 	LDP		X18, X19, [SP], #0x10
@@ -425,6 +448,16 @@ Exit_IRQ_No_Context_Switch:
 	MSR		ELR_EL3, X4
 	DSB		SY
 	ISB		SY
+   
+	/* 
+     * Restore the FPU context, if any - one global setting for all IRQs 
+     * so no need to save the ullPortIRQHasFPUContext across context
+     * as this value is a const.
+     */
+	LDR		X4, ullPortIRQHasFPUContextConst
+	LDR		X5, [X4]  
+	CMP		X5, #0
+	B.EQ	1f
     
     /* Restore FPSR */
     LDP		X4, X5, [SP], #0x10
@@ -448,6 +481,7 @@ Exit_IRQ_No_Context_Switch:
 	LDP		Q2, Q3, [SP], #0x20
 	LDP		Q0, Q1, [SP], #0x20
 
+1:
     /* Restore the base context */
 	LDP		X29, X30, [SP], #0x10
 	LDP		X18, X19, [SP], #0x10
@@ -474,6 +508,7 @@ Exit_IRQ_No_Context_Switch:
 pxCurrentTCBConst: .dword pxCurrentTCB
 ullCriticalNestingConst: .dword ullCriticalNesting
 ullPortTaskHasFPUContextConst: .dword ullPortTaskHasFPUContext
+ullPortIRQHasFPUContextConst: .dword ullPortIRQHasFPUContext
 
 ullMaxAPIPriorityMaskConst: .dword ullMaxAPIPriorityMask
 vApplicationIRQHandlerConst: .word vApplicationIRQHandler

@@ -53,14 +53,20 @@ make      # Add -j4 for a faster build on multi-core machines
 - In the `Automatic Breakpoints` tab, uncheck `Enable Semihosting`
 - Save and start debugging.
 
-## Initial flashing of the code using the ADI's Serial Flash Programmer
+## Initial flashing of the code using the ADI's Serial Flash Programmer or using the ICE Debugger
 
-- Download ADI Serial Flash Programmer: https://www.analog.com/en/resources/evaluation-hardware-and-software/embedded-development-software/crosscore-utilities.html.
-- Plug in the USB-C from PC to the connector on the SOM.
-- Select ADSP-SC598-SOM as target. 
-- Set the blue rotary switch on the ez-kit to position 3 and reset the
+- Follow below steps for Rev-D or earlier SoM
+  - Download ADI Serial Flash Programmer: https://www.analog.com/en/resources/evaluation-hardware-and-software/embedded-development-software/crosscore-utilities.html.
+  - Plug in the USB-C from PC to the connector on the SOM.
+  - Select ADSP-SC598-SOM as target. 
+  - Set the blue rotary switch on the ez-kit to position 3 and reset the
   board
-- Program the board using the serial flash programmer
-- Set the blue rotary switch back to one and reset the board
-- Additional details/instructions can be found in the Wiki
-
+  - Program the board using the serial flash programmer
+  - Set the blue rotary switch back to one and reset the board
+  - Additional details/instructions can be found in the Wiki
+- Follow below steps for Rev-E SoM through ICE-2000
+    - Set the rotary switch on the SoM to position zero and reset the
+      board
+    - Program the board using cldp by running flash_RevE_SoM.bat
+    . ./flash_RevE_SoM.bat
+    - Set the blue rotary switch back to one and reset the board

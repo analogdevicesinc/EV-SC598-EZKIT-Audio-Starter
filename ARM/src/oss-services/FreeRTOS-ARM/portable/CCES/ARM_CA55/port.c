@@ -151,6 +151,18 @@ uint64_t ullPortInterruptNesting = 0;
 /* Used in the ASM code. */
 __attribute__(( used )) const uint64_t ullMaxAPIPriorityMask = ( configMAX_API_CALL_INTERRUPT_PRIORITY << portPRIORITY_SHIFT );
 
+/*
+ * Assume that if the user has configured any type of FPU support then they'd also like
+ * to have FPU context saved during ISR handling too.  This assumption can be overridden
+ * by defining configNO_ISR_FPU_SUPPORT in FreeRTOSConfig.h.
+ */
+#if defined(configUSE_TASK_FPU_SUPPORT) && (configUSE_TASK_FPU_SUPPORT > 0) && \
+    !defined(configNO_ISR_FPU_SUPPORT)
+    const uint64_t ullPortIRQHasFPUContext = pdTRUE;
+#else
+    const uint64_t ullPortIRQHasFPUContext = pdFALSE;  
+#endif
+
 /*-----------------------------------------------------------*/
 
 /*

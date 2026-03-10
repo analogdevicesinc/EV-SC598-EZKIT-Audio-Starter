@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 - Analog Devices Inc. All Rights Reserved.
+ * Copyright (c) 2025 - Analog Devices Inc. All Rights Reserved.
  * This software is proprietary and confidential to Analog Devices, Inc.
  * and its licensors.
  *
@@ -13,43 +13,10 @@
 #define _init_ss_h
 
 #include "context.h"
-
-typedef bool (*SS_GET)(APP_CONTEXT *context, int pinId, bool *value);
-typedef bool (*SS_SET)(APP_CONTEXT *context, int pinId, bool value);
-
-enum SS_PIN_ID {
-    SS_PIN_ID_UNKNOWN = -1,
-    /* Carrier */
-    SS_PIN_ID_nADAU1979_EN,
-    SS_PIN_ID_nADAU_1962_EN,
-    SS_PIN_ID_nADAU_RESET,
-    SS_PIN_ID_nCAN_EN,
-    SS_PIN_ID_nFTDI_USB_EN,
-    SS_PIN_ID_nMicroSD_SPI,
-    SS_PIN_ID_PUSHBUTTON_EN,
-    SS_PIN_ID_EEPROM_EN,
-    SS_PIN_ID_nGIGe_RESET,
-    SS_PIN_ID_nETH1_RESET,
-    SS_PIN_ID_nETH1_EN,
-    SS_PIN_ID_nMLB_EN,
-    SS_PIN_ID_AUDIO_JACK_SEL,
-    SS_PIN_ID_nSPDIF_OPTICAL_EN,
-    SS_PIN_ID_nSPDIF_DIGITAL_EN,
-    SS_PIN_ID_OCTAL_SPI_CS_EN,
-    /* SOM */
-    SS_PIN_ID_nUART0_FLOW_EN,
-    SS_PIN_ID_nUART0_EN,
-    SS_PIN_ID_nSPID2_D3_EN,
-    SS_PIN_ID_nSPI2FLASH_CS_EN,
-    SS_PIN_ID_DS1,
-    SS_PIN_ID_DS2,
-    SS_PIN_ID_DS3,
-    SS_PIN_ID_EMMC_SOM_EN,
-    SS_PIN_ID_EMMC_EN,
-    SS_PIN_ID_MAX
-};
+#include "ss.h"
 
 void ss_init(APP_CONTEXT *context);
+void ss_deinit(APP_CONTEXT *context);
 bool ss_get(APP_CONTEXT *context, int pinId, bool *value);
 bool ss_set(APP_CONTEXT *context, int pinId, bool value);
 
